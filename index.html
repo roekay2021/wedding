@@ -1,138 +1,1484 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Emily & Geoff's Wedding</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-white text-gray-800 font-sans leading-relaxed">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Emily & Geoff's Wedding</title>
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            .slide {
+                display: none;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
 
-  <header class="text-center py-12 bg-pink-100">
-    <h1 class="text-4xl font-bold">Emily & Geoff</h1>
-    <p class="text-xl mt-2">21st – 24th August 2026 · Knockerdown Cottages, Derbyshire</p>
-    <div class="mt-4 flex justify-center gap-4">
-      <button class="bg-pink-500 text-white px-4 py-2 rounded">RSVP</button>
-      <button class="bg-blue-500 text-white px-4 py-2 rounded">Add to Calendar</button>
-    </div>
-  </header>
+            .slide.active {
+                display: block;
+            }
 
-  <section class="max-w-4xl mx-auto py-12 px-4">
-    <h2 class="text-2xl font-semibold mb-4">The Weekend</h2>
-    <p class="mb-6">Our wedding will take place on Sunday 23rd of August. We have our venue, Knockerdown Cottages, from the evening of Friday the 21st until the morning of Monday the 24th of August. We’d love to invite you to celebrate with us throughout the weekend. You’re welcome to join from Friday evening or on Saturday if you prefer.</p>
-    <p>Please note, this weekend is not the bank holiday in August.</p>
+            .dot.active {
+                background-color: rgba(255, 255, 255, 0.9) !important;
+            }
 
-    <div class="mb-6">
-      <h3 class="text-xl font-semibold mb-2">Timeline</h3>
-      <ul class="list-disc pl-6 space-y-2">
-        <li><strong>Friday:</strong> Arrive from 6pm, Shabbat dinner</li>
-        <li><strong>Saturday:</strong> Games & activities, Dinner</li>
-        <li><strong>Sunday:</strong> Ceremony, Speeches, Dancing, Food</li>
-        <li><strong>Monday:</strong> Breakfast, Checkout by 10am</li>
-      </ul>
-    </div>
+            /* Burger menu styles */
+            .burger-menu {
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 50;
+                cursor: pointer;
+                background: white;
+                border-radius: 8px;
+                padding: 10px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                transition: all 0.3s ease;
+                width: 45px;
+                height: 45px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
 
-    <div class="mb-6">
-      <h3 class="text-xl font-semibold mb-2">About Knockerdown</h3>
-      <p>We’re lucky to have exclusive use of Knockerdown holiday village from Friday evening until Monday morning. There are 16 cottages on site where most of our guests can stay, or you can stay nearby and join us at the site during the days.</p>
-      <p>The site includes an indoor swimming pool, pool and table tennis tables, a children’s play area, and lots of lovely space to relax. There is also a reservoir nearby and lots of scenic walks in the area. You can see the site plan here.</p>
-      <p>For those staying on site, you will stay in one of the 16 cottages at Knockerdown. These will be shared between groups of friends and family who know each other and will be allocated nearer the time. All of the cottages have full kitchens so you can self-cater throughout the weekend. You can see more about each cottage here.</p>
-      <p>You can view accessibility information on Knockerdown here.</p>
-      <div class="h-40 bg-gray-200 mt-4 flex items-center justify-center">[Image Placeholder – Site Plan]</div>
-    </div>
+            @media (max-width: 640px) {
+                .burger-menu {
+                    left: 15px;
+                    top: 15px;
+                    width: 40px;
+                    height: 40px;
+                    padding: 6px;
+                }
+            }
 
-    <div class="mb-6">
-      <h3 class="text-xl font-semibold mb-2">Accommodation</h3>
-      <p>Stay onsite or nearby. Local hotels, B&Bs, and campsites are available.</p>
-      <div class="h-40 bg-gray-200 mt-4 flex items-center justify-center">[Image Placeholder – Map or Options]</div>
-    </div>
+            .burger-menu:hover {
+                transform: scale(1.05);
+                box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+            }
 
-    <div class="mb-6">
-      <h3 class="text-xl font-semibold mb-2">Food & Drink</h3>
-      <p>We’ll provide meals on Sunday. Other meals will be a mix of catered and self-catered.</p>
-      <p>You’re welcome to bring your own drinks. Tea, coffee, and snacks will be provided in cottages.</p>
-    </div>
+            .burger-line {
+                width: 20px;
+                height: 2px;
+                background-color: #374151;
+                margin: 2px 0;
+                transition: 0.3s;
+                border-radius: 1px;
+            }
 
-    <div class="mb-6">
-      <h3 class="text-xl font-semibold mb-2">Local Activities</h3>
-      <ul class="list-disc pl-6">
-        <li><a class="text-blue-600 underline" href="http://theknockerdown.co.uk/">The Knockerdown Pub</a></li>
-        <li><a class="text-blue-600 underline" href="https://www.stwater.co.uk/our-visitor-sites/carsington-water/">Carsington Water</a></li>
-        <li><a class="text-blue-600 underline" href="https://www.tripadvisor.co.uk/Attraction_Review-g499571-d2280149-Reviews-Dovedale-Ashbourne_Derbyshire_England.html">Dovedale National Park</a></li>
-      </ul>
-    </div>
+            @media (max-width: 640px) {
+                .burger-line {
+                    width: 18px;
+                    height: 2px;
+                    margin: 1.5px 0;
+                }
+            }
 
-    <div class="mb-6">
-      <h3 class="text-xl font-semibold mb-2">Getting There</h3>
-      <ul class="list-disc pl-6 space-y-1">
-        <li>Free parking (incl. electric charging)</li>
-        <li>Train to Derby (45 mins away) or Cromford (limited service)</li>
-        <li>Taxi: ~£40 from Derby; book in advance</li>
-      </ul>
-    </div>
+            .burger-menu.active .burger-line:nth-child(1) {
+                transform: rotate(-45deg) translate(-6px, 6px);
+            }
 
-    <div class="mb-6">
-      <h3 class="text-xl font-semibold mb-2">Jewish Wedding FAQs</h3>
-      <ul class="list-disc pl-6">
-        <li>There will be Jewish elements, but it’s not strictly a Jewish ceremony</li>
-        <li>No special dress or customs required</li>
-        <li>Food is not kosher, but vegetarian options will be available</li>
-        <li>You may bring your own food for your cottage</li>
-        <li>Yes, we’ll do the chair thing!</li>
-      </ul>
-    </div>
+            .burger-menu.active .burger-line:nth-child(2) {
+                opacity: 0;
+            }
 
-    <div class="mb-6">
-      <h3 class="text-xl font-semibold mb-2">RSVP</h3>
-      <p class="mb-2">Please RSVP by <strong>[Insert Date]</strong></p>
-      <input type="tel" placeholder="Enter your phone number" class="border p-2 rounded w-full max-w-md" />
-    </div>
+            .burger-menu.active .burger-line:nth-child(3) {
+                transform: rotate(45deg) translate(-6px, -6px);
+            }
 
-    <div class="mb-6">
-      <h3 class="text-xl font-semibold mb-2">Gifts</h3>
-      <p>Your presence is the best gift. If you wish, you can contribute to our honeymoon fund.</p>
-    </div>
+            /* Side menu styles */
+            .side-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                max-width: calc(100vw - 40px);
+                height: 100vh;
+                background: linear-gradient(to bottom, #fdf7f0, #ffffff);
+                box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
+                z-index: 40;
+                transition: left 0.3s ease;
+                padding: 80px 20px 30px;
+                overflow-y: auto;
+            }
 
-    <div class="mb-6">
-      <h3 class="text-xl font-semibold mb-2">Packing List</h3>
-      <ul class="list-disc pl-6">
-        <li>Swimwear</li>
-        <li>Comfortable walking shoes</li>
-        <li>Sports gear for games</li>
-      </ul>
-      <p class="mt-2">We’ll provide bedding and towels.</p>
-    </div>
+            @media (max-width: 640px) {
+                .side-menu {
+                    width: calc(100vw - 40px);
+                    padding: 70px 20px 30px;
+                }
+            }
 
-    <div class="mb-6">
-      <h3 class="text-xl font-semibold mb-2">Dress Code</h3>
-      <p>Wedding (Sunday): Formal, but please avoid white and bridesmaid colours.</p>
-      <p>Saturday Evening: Smart/casual</p>
-      <p>Other times: Whatever you’re comfy in!</p>
-    </div>
+            .side-menu.active {
+                left: 0;
+            }
 
-    <div class="mb-6">
-      <h3 class="text-xl font-semibold mb-2">FAQs</h3>
-      <ul class="list-disc pl-6">
-        <li>Taxis: £40 from Derby, £60 for 8-seaters</li>
-        <li>Supermarkets in Ashbourne: Co-Op, Sainsbury’s, M&S, Aldi</li>
-        <li>You can order groceries to the site</li>
-      </ul>
-    </div>
+            .menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 30;
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
 
-    <div class="mb-6">
-      <h3 class="text-xl font-semibold mb-2">Wedding Party</h3>
-      <div class="h-40 bg-gray-200 flex items-center justify-center">[Image Placeholder – Wedding Party Photo]</div>
-    </div>
+            .menu-overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
 
-    <div>
-      <h3 class="text-xl font-semibold mb-2">Photo Album</h3>
-      <div class="h-40 bg-gray-200 flex items-center justify-center">[Image Placeholder – Album Section]</div>
-    </div>
-  </section>
+            .menu-link {
+                display: block;
+                padding: 15px 0;
+                color: #374151;
+                text-decoration: none;
+                font-weight: 500;
+                border-bottom: 1px solid #e5e7eb;
+                transition: all 0.3s ease;
+            }
 
-  <footer class="text-center bg-gray-100 py-6 mt-12">
-    <p>&copy; 2026 Emily & Geoff’s Wedding</p>
-  </footer>
+            .menu-link:hover {
+                color: #e08855;
+                padding-left: 10px;
+            }
 
-</body>
+            .menu-link:last-child {
+                border-bottom: none;
+            }
+
+            /* Smooth scrolling for the entire page */
+            html {
+                scroll-behavior: smooth;
+            }
+        </style>
+    </head>
+
+    <body
+        class="bg-gradient-to-br from-blush-50 via-white to-sage-50 text-gray-800 font-sans leading-relaxed w-full overflow-x-hidden max-w-full min-h-screen"
+    >
+        <!-- Burger Menu -->
+        <div class="burger-menu" id="burgerMenu">
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+        </div>
+
+        <!-- Menu Overlay -->
+        <div class="menu-overlay" id="menuOverlay"></div>
+
+        <!-- Side Menu -->
+        <nav class="side-menu" id="sideMenu">
+            <a href="#accommodation" class="menu-link">Accommodation</a>
+            <a href="#catering" class="menu-link">Catering</a>
+            <a href="#getting-there" class="menu-link">Getting There</a>
+            <a href="#schedule" class="menu-link">Schedule</a>
+            <a href="#taxis" class="menu-link">Taxis</a>
+            <a href="#photos" class="menu-link">Photos</a>
+            <a href="#rvsp" class="menu-link">RSVP</a>
+        </nav>
+        <header
+            class="relative pt-32 pb-20 bg-gradient-to-r from-blush-100 via-pink-50 to-sage-100 overflow-hidden"
+        >
+            <div class="absolute inset-0 bg-white/30"></div>
+            <div class="relative z-10 max-w-6xl mx-auto px-6">
+                <div
+                    class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8"
+                >
+                    <!-- Text and buttons section -->
+                    <div class="text-center lg:text-left lg:w-1/2">
+                        <h1
+                            class="text-6xl md:text-7xl font-serif font-bold text-gray-800 mb-4"
+                        >
+                            Emily & Geoff
+                        </h1>
+                        <div
+                            class="w-24 h-1 bg-gradient-to-r from-blush-400 to-sage-400 mx-auto lg:mx-0 mb-2"
+                        ></div>
+                        <p
+                            class="text-xl md:text-2xl font-light text-gray-700 mt-6 mb-2"
+                        >
+                            21st – 24th August 2026
+                        </p>
+                        <p class="text-lg text-gray-600 mb-8">
+                            Knockerdown Cottages, Ashbourne, Derbyshire, DE6 1NQ
+                        </p>
+                        <div
+                            class="flex flex-col lg:flex-row justify-center lg:justify-start gap-4 max-w-lg mx-auto lg:mx-0"
+                        >
+                            <a href="/#rvsp"
+                                ><button
+                                    class="bg-gradient-to-r from-blush-500 to-blush-500 hover:from-blush-500 hover:to-blush-700 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
+                                >
+                                    RSVP
+                                </button></a
+                            >
+                            <div
+                                class="flex gap-4 justify-center lg:justify-start"
+                            >
+                                <div class="relative">
+                                    <button
+                                        id="calendarBtn"
+                                        class="bg-gradient-to-r from-sage-500 to-sage-600 hover:from-sage-600 hover:to-sage-700 text-white px-4 py-3 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base sm:px-6"
+                                    >
+                                        Add to Calendar
+                                    </button>
+                                    <div
+                                        id="calendarDropdown"
+                                        class="hidden absolute top-full left-0 mt-2 bg-white rounded-lg shadow-xl border border-gray-200 w-auto min-w-max z-[9999]"
+                                    >
+                                        <div class="flex">
+                                            <a
+                                                href="#"
+                                                id="googleCalendar"
+                                                class="block px-4 py-3 text-gray-700 hover:bg-sage-50 border-r border-gray-100 transition-colors duration-200 rounded-l-lg text-sm"
+                                            >
+                                                📅 Google
+                                            </a>
+                                            <a
+                                                href="#"
+                                                id="appleCalendar"
+                                                class="block px-4 py-3 text-gray-700 hover:bg-sage-50 transition-colors duration-200 rounded-r-lg text-sm"
+                                            >
+                                                📅 Apple
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button
+                                    id="directionsBtn"
+                                    class="bg-gradient-to-r from-sage-500 to-sage-600 hover:from-sage-600 hover:to-sage-700 text-white px-4 py-3 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base sm:px-6"
+                                >
+                                    Get Directions
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Photo section -->
+                    <div class="lg:w-1/2 flex justify-center lg:justify-end">
+                        <img
+                            src="/attached_assets/emily-geoff-photo.png"
+                            alt="Emily & Geoff"
+                            class="w-full max-w-md h-auto rounded-2xl shadow-2xl object-cover"
+                        />
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="max-w-5xl mx-auto py-16 px-6">
+            <!-- The Weekend Section -->
+            <div class="mb-16 bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                <h2
+                    class="text-4xl font-serif font-semibold text-gray-800 mb-6"
+                >
+                    The Weekend
+                </h2>
+                <p class="text-lg text-gray-700 mb-6 leading-relaxed">
+                    Our wedding will take place on Sunday 23rd of August. We
+                    have our venue, Knockerdown Cottages, from the evening of
+                    Friday the 21st until the morning of Monday the 24th of
+                    August. We'd love to invite you to celebrate with us
+                    throughout the weekend. You're welcome to join from Friday
+                    evening or on Saturday if you prefer.
+                </p>
+                <div
+                    class="bg-blush-50 border-l-4 border-blush-400 p-4 rounded-r-lg"
+                >
+                    <p class="text-gray-700 font-medium">
+                        Please note, this weekend is <strong>NOT</strong> the
+                        bank holiday in August.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mb-16 bg-sage-50 rounded-2xl shadow-xl p-8 md:p-12">
+                <h3
+                    class="text-3xl font-serif font-semibold text-gray-800 mb-6"
+                >
+                    About Knockerdown
+                </h3>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            We're lucky to have exclusive use of Knockerdown
+                            holiday village from Friday evening until Monday
+                            morning.
+                        </p>
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            The site includes an indoor swimming pool, table
+                            tennis and pool table, a children's play area, and
+                            lots of lovely space to relax. There is also a
+                            reservoir nearby and lots of scenic walks in the
+                            area.
+                        </p>
+                        <p class="underline">
+                            <a
+                                href="https://peakvenues.s3.eu-west-2.amazonaws.com/floorplans/65_knockerdown-holiday-cottages_floorplans.pdf"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                >Site plan</a
+                            >
+                        </p>
+                    </div>
+                    <div
+                        class="relative h-64 rounded-xl overflow-hidden shadow-inner"
+                    >
+                        <div id="slideshow" class="relative w-full h-full">
+                            <div class="slide active">
+                                <img
+                                    src="/attached_assets/664dbc75a4a1d38f861a231d_medium (1)_1756647211542.jpg"
+                                    alt="Aerial view of Knockerdown Cottages"
+                                    class="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div class="slide">
+                                <img
+                                    src="/attached_assets/kc_swimming_1756647684702.jpg"
+                                    alt="Indoor swimming pool"
+                                    class="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div class="slide">
+                                <img
+                                    src="/attached_assets/KC_living_1756647718951.jpg"
+                                    alt="Cottage living area"
+                                    class="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div class="slide">
+                                <img
+                                    src="/attached_assets/kc_courtyard_1756647698671.jpg"
+                                    alt="Cottage courtyard"
+                                    class="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div class="slide">
+                                <img
+                                    src="/attached_assets/kc_meadow_1756647698672.jpg"
+                                    alt="Celebration in the meadow"
+                                    class="w-full h-full object-cover"
+                                />
+                            </div>
+                            <div class="slide">
+                                <img
+                                    src="/attached_assets/kc-kitchen_1756647684705.jpg"
+                                    alt="Cottage kitchen"
+                                    class="w-full h-full object-cover"
+                                />
+                            </div>
+                        </div>
+
+                        <!-- Navigation arrows -->
+                        <button
+                            id="prevSlide"
+                            class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300"
+                        >
+                            &#8249;
+                        </button>
+                        <button
+                            id="nextSlide"
+                            class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full w-10 h-10 flex items-center justify-center transition-all duration-300"
+                        >
+                            &#8250;
+                        </button>
+
+                        <!-- Dots indicator -->
+                        <div
+                            class="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2"
+                        >
+                            <button
+                                class="dot active w-2 h-2 rounded-full bg-white/80"
+                                data-slide="0"
+                            ></button>
+                            <button
+                                class="dot w-2 h-2 rounded-full bg-white/50"
+                                data-slide="1"
+                            ></button>
+                            <button
+                                class="dot w-2 h-2 rounded-full bg-white/50"
+                                data-slide="2"
+                            ></button>
+                            <button
+                                class="dot w-2 h-2 rounded-full bg-white/50"
+                                data-slide="3"
+                            ></button>
+                            <button
+                                class="dot w-2 h-2 rounded-full bg-white/50"
+                                data-slide="4"
+                            ></button>
+                            <button
+                                class="dot w-2 h-2 rounded-full bg-white/50"
+                                data-slide="5"
+                            ></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline Section - Full Width -->
+        <section
+            class="w-full py-16 bg-gradient-to-br from-blush-50 via-white to-sage-50"
+            id="schedule"
+        >
+            <div class="max-w-7xl mx-auto px-6">
+                <h3
+                    class="text-3xl font-serif font-semibold text-gray-800 mb-8 text-center"
+                >
+                    Weekend Timeline
+                </h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Friday -->
+                    <div
+                        class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105 schedule-card"
+                        data-day="friday"
+                    >
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-blush-400 to-blush-500 rounded-full flex items-center justify-center mx-auto mb-4"
+                        >
+                            <span class="text-white font-bold text-lg"
+                                >Fri</span
+                            >
+                        </div>
+                        <h4 class="font-semibold text-gray-800 mb-2">Friday</h4>
+                        <p class="text-gray-600 text-sm">Arrive from 6pm</p>
+                        <div class="mt-2 text-blush-500 text-xs font-medium">
+                            Click for details ↓
+                        </div>
+
+                        <!-- Friday Details (Initially Hidden) -->
+                        <div
+                            id="friday-details"
+                            class="hidden mt-4 pt-4 border-t border-gray-200 text-left"
+                        >
+                            <h5 class="font-semibold text-gray-800 mb-2">
+                                Friday Evening
+                            </h5>
+                            <ul class="text-sm text-gray-700 space-y-1">
+                                <li>• Check into cottages from 6pm</li>
+                                <li>• Settle in and explore the site</li>
+                                <li>• Informal welcome drinks</li>
+                                <li>
+                                    • Early night to prepare for the weekend!
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Saturday -->
+                    <div
+                        class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105 schedule-card"
+                        data-day="saturday"
+                    >
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-sage-400 to-sage-500 rounded-full flex items-center justify-center mx-auto mb-4"
+                        >
+                            <span class="text-white font-bold text-lg"
+                                >Sat</span
+                            >
+                        </div>
+                        <h4 class="font-semibold text-gray-800 mb-2">
+                            Saturday
+                        </h4>
+                        <p class="text-gray-600 text-sm">
+                            Games & Activities<br />Dinner
+                        </p>
+                        <div class="mt-2 text-sage-500 text-xs font-medium">
+                            Click for details ↓
+                        </div>
+
+                        <!-- Saturday Details (Initially Hidden) -->
+                        <div
+                            id="saturday-details"
+                            class="hidden mt-4 pt-4 border-t border-gray-200 text-left"
+                        >
+                            <h5 class="font-semibold text-gray-800 mb-2">
+                                Saturday Activities
+                            </h5>
+                            <div class="text-sm text-gray-700 space-y-2 mb-3">
+                                <p>
+                                    <strong>Morning:</strong> Self-catered
+                                    breakfast
+                                </p>
+                                <p>
+                                    <strong>Day:</strong> Games, swimming,
+                                    relaxation
+                                </p>
+                                <p>
+                                    <strong>Evening:</strong> Group dinner &
+                                    entertainment
+                                </p>
+                            </div>
+
+                            <h5 class="font-semibold text-gray-800 mb-2">
+                                Local Activities
+                            </h5>
+                            <div class="space-y-2">
+                                <a
+                                    href="http://theknockerdown.co.uk/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="block p-2 rounded bg-blush-50 hover:bg-blush-100 transition-colors"
+                                >
+                                    <span class="font-medium text-blush-700"
+                                        >The Knockerdown Pub</span
+                                    >
+                                    <p class="text-xs text-gray-600">
+                                        Local pub right across the road
+                                    </p>
+                                </a>
+                                <a
+                                    href="https://www.stwater.co.uk/our-visitor-sites/carsington-water/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="block p-2 rounded bg-sage-50 hover:bg-sage-100 transition-colors"
+                                >
+                                    <span class="font-medium text-sage-700"
+                                        >Carsington Water</span
+                                    >
+                                    <p class="text-xs text-gray-600">
+                                        Paddleboarding, fishing, walks
+                                    </p>
+                                </a>
+                                <a
+                                    href="https://www.tripadvisor.co.uk/Attraction_Review-g499571-d2280149-Reviews-Dovedale-Ashbourne_Derbyshire_England.html"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="block p-2 rounded bg-pink-50 hover:bg-pink-100 transition-colors"
+                                >
+                                    <span class="font-medium text-pink-700"
+                                        >Dovedale National Park</span
+                                    >
+                                    <p class="text-xs text-gray-600">
+                                        Scenic walks
+                                    </p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sunday -->
+                    <div
+                        class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105 schedule-card"
+                        data-day="sunday"
+                    >
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-pink-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4"
+                        >
+                            <span class="text-white font-bold text-lg"
+                                >Sun</span
+                            >
+                        </div>
+                        <h4 class="font-semibold text-gray-800 mb-2">Sunday</h4>
+                        <p class="text-gray-600 text-sm">
+                            Ceremony, Speeches<br />Dancing, Food
+                        </p>
+                        <div class="mt-2 text-pink-500 text-xs font-medium">
+                            Click for details ↓
+                        </div>
+
+                        <!-- Sunday Details (Initially Hidden) -->
+                        <div
+                            id="sunday-details"
+                            class="hidden mt-4 pt-4 border-t border-gray-200 text-left"
+                        >
+                            <h5 class="font-semibold text-gray-800 mb-2">
+                                Wedding Day
+                            </h5>
+                            <ul class="text-sm text-gray-700 space-y-1">
+                                <li>
+                                    • <strong>Morning:</strong> Self-catered
+                                    breakfast
+                                </li>
+                                <li>
+                                    • <strong>Afternoon:</strong> Wedding
+                                    ceremony
+                                </li>
+                                <li>
+                                    • <strong>Evening:</strong> Speeches &
+                                    dinner
+                                </li>
+                                <li>
+                                    • <strong>Night:</strong> Dancing &
+                                    celebration
+                                </li>
+                                <li>
+                                    • Jewish traditions including chair lifting!
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Monday -->
+                    <div
+                        class="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105 schedule-card"
+                        data-day="monday"
+                    >
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4"
+                        >
+                            <span class="text-white font-bold text-lg"
+                                >Mon</span
+                            >
+                        </div>
+                        <h4 class="font-semibold text-gray-800 mb-2">Monday</h4>
+                        <p class="text-gray-600 text-sm">
+                            Breakfast<br />Checkout by 10am
+                        </p>
+                        <div class="mt-2 text-blue-500 text-xs font-medium">
+                            Click for details ↓
+                        </div>
+
+                        <!-- Monday Details (Initially Hidden) -->
+                        <div
+                            id="monday-details"
+                            class="hidden mt-4 pt-4 border-t border-gray-200 text-left"
+                        >
+                            <h5 class="font-semibold text-gray-800 mb-2">
+                                Monday Morning
+                            </h5>
+                            <ul class="text-sm text-gray-700 space-y-1">
+                                <li>• Provided breakfast</li>
+                                <li>• Pack and tidy cottages</li>
+                                <li>• Final goodbyes</li>
+                                <li>• Checkout by 10am</li>
+                                <li>• Safe travels home!</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="max-w-5xl mx-auto py-16 px-6">
+            <!-- Two Column Layout for Accommodation and Food -->
+            <div class="grid lg:grid-cols-2 gap-8 mb-16">
+                <!-- Accommodation -->
+                <div
+                    class="bg-white rounded-2xl shadow-xl p-8"
+                    id="accommodation"
+                >
+                    <h3
+                        class="text-2xl font-serif font-semibold text-gray-800 mb-6"
+                    >
+                        Accommodation
+                    </h3>
+
+                    <div class="mb-6">
+                        <h4 class="font-semibold text-blush-600 mb-3">
+                            On site
+                        </h4>
+                        <p class="text-gray-700 text-sm mb-2">
+                            Most of our guests will stay in one of the 16
+                            cottages at Knockerdown. These will be shared
+                            between groups of friends and family who know each
+                            other and will be allocated once we have RVSPs back.
+                            You can see more about each cottage
+                            <a
+                                href="https://www.knockerdowncottages.co.uk/stay"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="underline"
+                                >here.</a
+                            >
+                        </p>
+
+                        <h4 class="font-semibold text-blush-600 mb-3">
+                            Camp Sites
+                        </h4>
+                        <p class="text-gray-700 text-sm mb-2">
+                            The pub across from Knockerdown has a campsite
+                            reopening in 2026 after refurbishment.
+                        </p>
+                        <p class="text-gray-600 text-sm">
+                            Unfortunately campervans cannot stay on site at
+                            Knockerdown.
+                        </p>
+
+                        <h4 class="font-semibold text-blush-600 my-3">
+                            Hotels
+                        </h4>
+                        <p class="text-gray-700 text-sm">
+                            Nearby hotels in Ashbourne (11 min) and Matlock (22
+                            min), plus B&Bs and Airbnbs in surrounding villages.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Food & Drink -->
+                <div class="bg-white rounded-2xl shadow-xl p-8" id="catering">
+                    <h3
+                        class="text-2xl font-serif font-semibold text-gray-800 mb-6"
+                    >
+                        Catering
+                    </h3>
+                    <div class="space-y-4">
+                        <h4 class="font-semibold text-blush-600 mb-3">Food</h4>
+                        <div class="flex items-start space-x-3">
+                            <div
+                                class="w-2 h-2 bg-blush-400 rounded-full mt-2"
+                            ></div>
+                            <p class="text-gray-700 text-sm">
+                                We'll provide dinner on Saturday, lunch and
+                                dinner on Sunday, and breakfast Monday morning.
+                            </p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div
+                                class="w-2 h-2 bg-sage-400 rounded-full mt-2"
+                            ></div>
+                            <p class="text-gray-700 text-sm">
+                                All of the cottages have full kitchens so you
+                                can self-cater Saturday and Sunday breakfast.
+                            </p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div
+                                class="w-2 h-2 bg-pink-400 rounded-full mt-2"
+                            ></div>
+                            <p class="text-gray-700 text-sm">
+                                Tea, coffee, and snacks provided in cottages.
+                            </p>
+                        </div>
+                        <h4 class="font-semibold text-blush-600 mb-3">Drink</h4>
+                        <div class="flex items-start space-x-3">
+                            <div
+                                class="w-2 h-2 bg-blue-400 rounded-full mt-2"
+                            ></div>
+                            <p class="text-gray-700 text-sm">
+                                We'll provide a bar and you're also able to
+                                bring your own drinks to have at any time during
+                                the weekend.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Getting There -->
+            <div
+                class="mb-16 bg-gradient-to-r from-blush-50 to-sage-50 rounded-2xl shadow-xl p-8"
+                id="getting-there"
+            >
+                <h3
+                    class="text-2xl font-serif font-semibold text-gray-800 mb-6"
+                >
+                    Getting There
+                </h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div
+                            class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3"
+                        >
+                            <span class="text-white text-xl">🚗</span>
+                        </div>
+                        <h4 class="font-semibold mb-2">By Car</h4>
+                        <p class="text-sm text-gray-600">
+                            Free parking including
+                            <a
+                                href="https://qrco.de/beyW5l"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="underline"
+                            >
+                                electric charging</a
+                            >
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <div
+                            class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3"
+                        >
+                            <span class="text-white text-xl">🚂</span>
+                        </div>
+                        <h4 class="font-semibold mb-2">By Train</h4>
+                        <p class="text-sm text-gray-600">
+                            Derby (45 mins) or Cromford (limited service)
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <div
+                            class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-3"
+                        >
+                            <span class="text-white text-xl">🚕</span>
+                        </div>
+                        <h4 class="font-semibold mb-2">By Taxi</h4>
+                        <p class="text-sm text-gray-600 mb-1">
+                            ~£40 from Derby for 4-seaters, ~£60 for 8-seaters;
+                            book in advance
+                        </p>
+                        <p class="text-sm text-gray-600">
+                            <a href="#taxis" class="underline bold"
+                                >Taxi numbers</a
+                            >
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jewish Wedding FAQs - Full Width -->
+            <div class="mb-16 bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                <h3
+                    class="text-3xl font-serif font-semibold text-gray-800 mb-6"
+                >
+                    Jewish Wedding FAQs
+                </h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-semibold mb-2">
+                                Will it be a Jewish wedding?
+                            </h4>
+                            <p class="text-gray-700 text-sm">
+                                Although technically not a Jewish wedding, we
+                                will have elements of Jewish religion and
+                                culture throughout the day
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">
+                                Do I need to do or wear anything different?
+                            </h4>
+                            <p class="text-gray-700 text-sm">
+                                Absolutely not. Please wear whatever you
+                                normally would to a wedding. Our Jewish guests
+                                may wear kippot (small hats worn in prayer) and
+                                prayer shawls called tallitot, but nobody is
+                                obliged to do so.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">
+                                Will the food be kosher?
+                            </h4>
+                            <p class="text-gray-700 text-sm">
+                                Our catering won't be provided by a kosher
+                                caterer, but we will ensure there is a
+                                vegetarian option at all times. There are also
+                                self-catering facilities in the cottages if you
+                                would feel more comfortable cooking for
+                                yourselves.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-semibold mb-2">
+                                Can I bring non-kosher food for my own cottage?
+                            </h4>
+                            <p class="text-gray-700 text-sm">
+                                You're welcome to eat however you like in your
+                                own cottage.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">
+                                Why is the wedding on Sunday?
+                            </h4>
+                            <p class="text-gray-700 text-sm">
+                                Traditionally, Jewish people don't get married
+                                between sunset on Friday and sunset on Saturday
+                                as this is Shabbat (the day of rest)
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">
+                                Are you going to do the thing with the chairs?
+                            </h4>
+                            <p class="text-gray-700 text-sm">Yes! 🪑</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RSVP Section -->
+            <div
+                class="mb-16 bg-gradient-to-r from-pink-100 via-blush-100 to-sage-100 rounded-2xl shadow-xl p-8 text-center"
+            >
+                <h3
+                    class="text-3xl font-serif font-semibold text-gray-800 mb-6"
+                    id="rvsp"
+                >
+                    RSVP
+                </h3>
+                <div class="max-w-md mx-auto">
+                    <div id="rsvpForm">
+                        <div id="phoneStep" class="space-y-4">
+                            <div
+                                class="flex flex-col sm:flex-row gap-2 w-full max-w-full"
+                            >
+                                <select
+                                    id="countryCode"
+                                    class="border-2 border-gray-200 focus:border-blush-400 p-3 sm:p-4 rounded-xl transition-colors duration-300 bg-white text-sm sm:text-base flex-shrink-0 min-w-0"
+                                >
+                                    <option value="+44">🇬🇧 +44</option>
+                                </select>
+                                <input
+                                    type="tel"
+                                    id="phoneInput"
+                                    placeholder="Enter phone number"
+                                    class="flex-1 border-2 border-gray-200 focus:border-blush-400 p-3 sm:p-4 rounded-xl transition-colors duration-300 text-sm sm:text-base min-w-0"
+                                />
+                            </div>
+                            <div
+                                id="errorMessage"
+                                class="text-red-600 text-sm hidden"
+                            ></div>
+                            <button
+                                id="sendCodeBtn"
+                                class="w-full bg-gradient-to-r from-blush-500 to-pink-500 hover:from-blush-600 hover:to-pink-600 text-white px-8 py-4 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl whitespace-nowrap"
+                            >
+                                Send Verification Code
+                            </button>
+                        </div>
+
+                        <div id="verificationStep" class="space-y-4 hidden">
+                            <p class="text-gray-600 text-sm">
+                                Enter the 6-digit code sent to your phone:
+                            </p>
+                            <input
+                                type="text"
+                                id="codeInput"
+                                placeholder="Enter verification code"
+                                maxlength="6"
+                                class="w-full border-2 border-gray-200 focus:border-blush-400 p-4 rounded-xl text-center transition-colors duration-300"
+                            />
+                            <div
+                                id="verificationError"
+                                class="text-red-600 text-sm hidden"
+                            ></div>
+                            <button
+                                id="verifyBtn"
+                                class="w-full bg-gradient-to-r from-sage-500 to-sage-600 hover:from-sage-600 hover:to-sage-700 text-white px-8 py-4 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
+                            >
+                                Verify Code
+                            </button>
+                            <button
+                                id="backBtn"
+                                class="w-full bg-gray-400 hover:bg-gray-500 text-white px-8 py-2 rounded-xl font-medium transition-all duration-300"
+                            >
+                                Back
+                            </button>
+                        </div>
+
+                        <div id="successStep" class="space-y-4 hidden">
+                            <div class="text-center">
+                                <div class="text-green-600 text-4xl mb-4">
+                                    ✓
+                                </div>
+                                <h4
+                                    class="text-xl font-semibold text-gray-800 mb-2"
+                                >
+                                    Phone Verified!
+                                </h4>
+                                <p class="text-gray-600" id="welcomeMessage">
+                                    Thank you for verifying your phone number.
+                                </p>
+                                <div
+                                    id="loadingInvitee"
+                                    class="text-gray-500 text-sm mt-2 hidden"
+                                >
+                                    <div
+                                        class="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-blush-500 mr-2"
+                                    ></div>
+                                    Loading your information...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enhanced FAQ Section -->
+            <div class="mb-16">
+                <div class="bg-white rounded-2xl shadow-xl p-8 md:p-10">
+                    <h3
+                        class="text-3xl font-serif font-semibold text-gray-800 mb-8 text-center"
+                    >
+                        Useful Information
+                    </h3>
+
+                    <!-- Grid layout for organized sections -->
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Gifts Section -->
+                        <div
+                            class="bg-gradient-to-br from-blush-50 to-pink-50 rounded-xl p-6"
+                        >
+                            <h4
+                                class="text-lg font-semibold text-blush-700 mb-3 flex items-center"
+                            >
+                                <span class="text-xl mr-2">🎁</span>
+                                Gifts
+                            </h4>
+                            <p class="text-sm text-gray-700">
+                                Please don't feel like you need to get us
+                                anything, but if you'd like to give a gift, any
+                                contribution to our honeymoon fund would be
+                                appreciated!
+                            </p>
+                        </div>
+
+                        <!-- Packing List -->
+                        <div
+                            class="bg-gradient-to-br from-sage-50 to-green-50 rounded-xl p-6"
+                        >
+                            <h4
+                                class="text-lg font-semibold text-sage-700 mb-3 flex items-center"
+                            >
+                                <span class="text-xl mr-2">🎒</span>
+                                What to Pack
+                            </h4>
+                            <ul class="space-y-2 text-sm text-gray-700">
+                                <li class="flex items-center space-x-2">
+                                    <span
+                                        class="w-2 h-2 bg-blue-400 rounded-full"
+                                    ></span>
+                                    <span>Swimwear</span>
+                                </li>
+                                <li class="flex items-center space-x-2">
+                                    <span
+                                        class="w-2 h-2 bg-green-400 rounded-full"
+                                    ></span>
+                                    <span>Walking shoes</span>
+                                </li>
+                                <li class="flex items-center space-x-2">
+                                    <span
+                                        class="w-2 h-2 bg-orange-400 rounded-full"
+                                    ></span>
+                                    <span>Dancing shoes</span>
+                                </li>
+                                <li class="flex items-center space-x-2">
+                                    <span
+                                        class="w-2 h-2 bg-purple-400 rounded-full"
+                                    ></span>
+                                    <span>Sports gear</span>
+                                </li>
+                            </ul>
+                            <p class="text-xs text-gray-600 mt-3 italic">
+                                Towels provided by venue
+                            </p>
+                        </div>
+
+                        <!-- Dress Code -->
+                        <div
+                            class="bg-gradient-to-br from-pink-50 to-rose-50 rounded-xl p-6"
+                        >
+                            <h4
+                                class="text-lg font-semibold text-pink-700 mb-3 flex items-center"
+                            >
+                                <span class="text-xl mr-2">👗</span>
+                                Dress Code
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="bg-sage-100 rounded-lg p-3">
+                                    <p
+                                        class="text-sm font-medium text-sage-800"
+                                    >
+                                        Saturday Evening
+                                    </p>
+                                    <p class="text-xs text-gray-700">
+                                        Smart casual
+                                    </p>
+                                </div>
+                                <div class="bg-pink-100 rounded-lg p-3">
+                                    <p
+                                        class="text-sm font-medium text-pink-800"
+                                    >
+                                        Sunday (Wedding)
+                                    </p>
+                                    <p class="text-xs text-gray-700">
+                                        Formal attire - avoid white & bridesmaid
+                                        colours
+                                    </p>
+                                </div>
+                                <div class="bg-blush-100 rounded-lg p-3">
+                                    <p
+                                        class="text-sm font-medium text-blush-800"
+                                    >
+                                        Other Times
+                                    </p>
+                                    <p class="text-xs text-gray-700">
+                                        Whatever you're comfortable in!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Local Services -->
+                        <div
+                            class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6"
+                        >
+                            <h4
+                                class="text-lg font-semibold text-blue-700 mb-3 flex items-center"
+                            >
+                                <span class="text-xl mr-2">🏪</span>
+                                Local Services
+                            </h4>
+                            <div class="space-y-2 text-sm text-gray-700">
+                                <p>
+                                    <strong>Supermarkets:</strong> Co-Op,
+                                    Sainsbury's, M&S, Aldi in Ashbourne
+                                </p>
+                                <p>
+                                    <strong>Groceries:</strong> Can be delivered
+                                    to site
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Facilities -->
+                        <div
+                            class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6"
+                        >
+                            <h4
+                                class="text-lg font-semibold text-purple-700 mb-3 flex items-center"
+                            >
+                                <span class="text-xl mr-2">🏠</span>
+                                Facilities
+                            </h4>
+                            <div class="space-y-2 text-sm text-gray-700">
+                                <p>Each cottage has iron and ironing board</p>
+                                <p>
+                                    One hair dryer per property (master bedroom)
+                                </p>
+                                <p>
+                                    <strong>WiFi:</strong> Available throughout
+                                    site. Rural location - good for
+                                    emails/social media, limited for
+                                    streaming/gaming
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Transportation -->
+                        <div
+                            class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl p-6"
+                            id="taxis"
+                        >
+                            <h4
+                                class="text-lg font-semibold text-orange-700 mb-3 flex items-center"
+                            >
+                                <span class="text-xl mr-2">🚕</span>
+                                Taxi Numbers
+                            </h4>
+                            <div class="space-y-1 text-sm text-gray-700">
+                                <p>Village Taxis – 01335 418080</p>
+                                <p>Ashbourne Taxis – 01335 345198</p>
+                                <p>Cross Dales Taxis – 01629 650025</p>
+                            </div>
+                            <p class="text-xs text-gray-600 mt-2 italic">
+                                Book in advance recommended
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo Placeholders -->
+            <div class="grid md:grid-cols-2 gap-8" id="photos">
+                <div
+                    class="bg-gradient-to-br from-blush-100 to-pink-100 rounded-2xl shadow-xl h-64 flex items-center justify-center"
+                >
+                    <div class="text-center">
+                        <span class="text-4xl mb-2 block">👰🤵</span>
+                        <span class="text-gray-600 font-medium"
+                            >Wedding photographer photos</span
+                        >
+                        <p class="text-gray-500 text-sm mt-2">
+                            Link will appear here
+                        </p>
+                    </div>
+                </div>
+                <a
+                    href="https://photos.app.goo.gl/jwN2Zw7PCpjCuUG28"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <div
+                        class="bg-gradient-to-br from-sage-100 to-blue-100 rounded-2xl shadow-xl h-64 flex items-center justify-center"
+                    >
+                        <div class="text-center">
+                            <span class="text-4xl mb-2 block">📸</span>
+                            <span class="text-gray-600 font-medium"
+                                >Add your photos</span
+                            >
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <footer
+            class="text-center bg-gradient-to-r from-gray-800 to-gray-900 text-white py-12 mt-16"
+        >
+            <div class="max-w-4xl mx-auto px-6">
+                <h2 class="text-2xl font-serif font-semibold mb-4">
+                    Emily & Geoff
+                </h2>
+                <div
+                    class="w-16 h-1 bg-gradient-to-r from-blush-400 to-sage-400 mx-auto mb-4"
+                ></div>
+                <p class="text-gray-300">
+                    August 21st - 24th, 2026 · Knockerdown Cottages, Ashbourne,
+                    Derbyshire, DE6 1NQ
+                </p>
+            </div>
+        </footer>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Burger menu functionality
+                const burgerMenu = document.getElementById("burgerMenu");
+                const sideMenu = document.getElementById("sideMenu");
+                const menuOverlay = document.getElementById("menuOverlay");
+                const menuLinks = document.querySelectorAll(".menu-link");
+
+                function toggleMenu() {
+                    burgerMenu.classList.toggle("active");
+                    sideMenu.classList.toggle("active");
+                    menuOverlay.classList.toggle("active");
+                }
+
+                function closeMenu() {
+                    burgerMenu.classList.remove("active");
+                    sideMenu.classList.remove("active");
+                    menuOverlay.classList.remove("active");
+                }
+
+                burgerMenu.addEventListener("click", toggleMenu);
+                menuOverlay.addEventListener("click", closeMenu);
+
+                // Close menu when clicking on a link
+                menuLinks.forEach((link) => {
+                    link.addEventListener("click", closeMenu);
+                });
+
+                // Close menu with Escape key
+                document.addEventListener("keydown", function (e) {
+                    if (e.key === "Escape") {
+                        closeMenu();
+                    }
+                });
+
+                // Handle smooth scrolling to center of screen for anchor links
+                function scrollToCenter(targetId) {
+                    const element = document.getElementById(targetId);
+                    if (element) {
+                        const elementRect = element.getBoundingClientRect();
+                        const absoluteElementTop =
+                            elementRect.top + window.pageYOffset;
+                        const elementHeight = elementRect.height;
+                        const windowHeight = window.innerHeight;
+
+                        // Calculate position to center the element
+                        const offsetTop =
+                            absoluteElementTop -
+                            windowHeight / 2 +
+                            elementHeight / 2;
+
+                        window.scrollTo({
+                            top: Math.max(0, offsetTop),
+                            behavior: "smooth",
+                        });
+                    }
+                }
+
+                // Handle clicks on menu links
+                menuLinks.forEach((link) => {
+                    link.addEventListener("click", function (e) {
+                        e.preventDefault();
+                        const href = this.getAttribute("href");
+                        if (href.startsWith("#")) {
+                            const targetId = href.substring(1);
+                            closeMenu();
+                            setTimeout(() => scrollToCenter(targetId), 100); // Small delay to allow menu to close
+                        }
+                    });
+                });
+
+                // Handle other anchor links on the page
+                document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+                    if (!anchor.classList.contains("menu-link")) {
+                        // Don't double-handle menu links
+                        anchor.addEventListener("click", function (e) {
+                            e.preventDefault();
+                            const targetId =
+                                this.getAttribute("href").substring(1);
+                            scrollToCenter(targetId);
+                        });
+                    }
+                });
+
+                const calendarBtn = document.getElementById("calendarBtn");
+                const calendarDropdown =
+                    document.getElementById("calendarDropdown");
+                const googleCalendar =
+                    document.getElementById("googleCalendar");
+                const appleCalendar = document.getElementById("appleCalendar");
+
+                // Toggle dropdown
+                calendarBtn.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    calendarDropdown.classList.toggle("hidden");
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener("click", function (e) {
+                    if (
+                        !calendarBtn.contains(e.target) &&
+                        !calendarDropdown.contains(e.target)
+                    ) {
+                        calendarDropdown.classList.add("hidden");
+                    }
+                });
+
+                // Google Calendar event
+                googleCalendar.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    const startDate = "20260821";
+                    const endDate = "20260825"; // Day after end date for all-day events
+                    const title = encodeURIComponent(
+                        "Emily and Geoff's Wedding",
+                    );
+                    const location = encodeURIComponent(
+                        "Knockerdown Cottages, Ashbourne, Derbyshire, DE6 1NQ",
+                    );
+                    const details = encodeURIComponent(
+                        "Wedding weekend celebration at Knockerdown Cottages",
+                    );
+
+                    const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startDate}/${endDate}&location=${location}&details=${details}`;
+                    window.open(googleUrl, "_blank");
+                    calendarDropdown.classList.add("hidden");
+                });
+
+                // Apple Calendar event (.ics file)
+                appleCalendar.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Wedding//Wedding Calendar//EN
+BEGIN:VEVENT
+UID:${Date.now()}@wedding.com
+DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").split(".")[0]}Z
+DTSTART;VALUE=DATE:20260821
+DTEND;VALUE=DATE:20260825
+SUMMARY:Emily and Geoff's Wedding
+LOCATION:Knockerdown Cottages, Ashbourne, Derbyshire, DE6 1NQ
+DESCRIPTION:Wedding weekend celebration at Knockerdown Cottages
+END:VEVENT
+END:VCALENDAR`;
+
+                    const blob = new Blob([icsContent], {
+                        type: "text/calendar",
+                    });
+                    const url = window.URL.createObjectURL(blob);
+                    const link = document.createElement("a");
+                    link.href = url;
+                    link.download = "emily-geoff-wedding.ics";
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(url);
+                    calendarDropdown.classList.add("hidden");
+                });
+
+                // Directions button functionality
+                const directionsBtn = document.getElementById("directionsBtn");
+                directionsBtn.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    const destination =
+                        "Knockerdown Cottages, Ashbourne, Derbyshire, DE6 1NQ";
+                    const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
+                    window.open(googleMapsUrl, "_blank");
+                });
+
+                // Slideshow functionality
+                let currentSlide = 0;
+                const slides = document.querySelectorAll(".slide");
+                const dots = document.querySelectorAll(".dot");
+                const prevBtn = document.getElementById("prevSlide");
+                const nextBtn = document.getElementById("nextSlide");
+
+                function showSlide(n) {
+                    slides[currentSlide].classList.remove("active");
+                    dots[currentSlide].classList.remove("active");
+
+                    currentSlide = (n + slides.length) % slides.length;
+
+                    slides[currentSlide].classList.add("active");
+                    dots[currentSlide].classList.add("active");
+                }
+
+                function nextSlide() {
+                    showSlide(currentSlide + 1);
+                }
+
+                function prevSlide() {
+                    showSlide(currentSlide - 1);
+                }
+
+                // Navigation event listeners
+                nextBtn.addEventListener("click", nextSlide);
+                prevBtn.addEventListener("click", prevSlide);
+
+                // Dot navigation
+                dots.forEach((dot, index) => {
+                    dot.addEventListener("click", () => showSlide(index));
+                });
+
+                // Schedule card functionality
+                const scheduleCards =
+                    document.querySelectorAll(".schedule-card");
+
+                scheduleCards.forEach((card) => {
+                    card.addEventListener("click", function () {
+                        const day = this.dataset.day;
+                        const details = document.getElementById(
+                            `${day}-details`,
+                        );
+
+                        if (details.classList.contains("hidden")) {
+                            // Close all other details first
+                            scheduleCards.forEach((otherCard) => {
+                                const otherDay = otherCard.dataset.day;
+                                const otherDetails = document.getElementById(
+                                    `${otherDay}-details`,
+                                );
+                                if (
+                                    otherDetails &&
+                                    !otherDetails.classList.contains("hidden")
+                                ) {
+                                    otherDetails.classList.add("hidden");
+                                    otherCard.classList.remove(
+                                        "ring-2",
+                                        "ring-blush-300",
+                                    );
+                                }
+                            });
+
+                            // Open this card's details
+                            details.classList.remove("hidden");
+                            this.classList.add("ring-2", "ring-blush-300");
+                        } else {
+                            // Close this card's details
+                            details.classList.add("hidden");
+                            this.classList.remove("ring-2", "ring-blush-300");
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
 </html>
